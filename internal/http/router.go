@@ -31,7 +31,6 @@ func (r *router) setGroup() {
 }
 
 func (r *router) buildRoutes() {
-	r.addSystemPaths()
 	userRepository := userrepository.NewUserRepository(r.db)
 
 	userService := userservice.NewUser(userRepository)

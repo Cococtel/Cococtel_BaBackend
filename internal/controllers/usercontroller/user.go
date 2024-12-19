@@ -130,18 +130,6 @@ func (u *user) NotifyQRRead() gin.HandlerFunc {
 	}
 }
 
-func (u *user) VerifyToken() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		err := u.userService.VerifyToken(ctx)
-		if err != nil {
-			log.Println(err)
-			utils.Error(ctx, err.Status(), err.Message().Error())
-			return
-		}
-		utils.Success(ctx, http.StatusOK, "ok")
-	}
-}
-
 /*
 func (u *user) EditProfile() gin.HandlerFunc {
 	return func(ctx *gin.Context) {

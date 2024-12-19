@@ -16,6 +16,6 @@ var (
 	ErrAuthAlreadyEnabled = errors.New("Ya se encuentra habilitado el login de dos factores")
 
 	// Authorization
-	ErrNotFoundAuthHeader = errors.New("Missing authorization header")
+	ErrNotFoundAuthHeader = errors.New("Missing authorization header: x-auth-token")
 	ErrInvalidToken       = errors.New("Token invalido")
 )
