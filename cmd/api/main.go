@@ -2,32 +2,21 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/Cococtel/Cococtel_BaBackend/internal/http"
 	"github.com/gin-gonic/gin"
-	"github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
+	"os"
 )
 
 func main() {
-	/*
-		godotenv.Load(".env")
-		db, err := createDB()
-		if err != nil {
-			panic(e	rr)
-		}
-	*/
-	cfg := mysql.Config{
-		User:                 "root",
-		Passwd:               "",
-		Net:                  "tcp",
-		Addr:                 "127.0.0.1:3306",
-		DBName:               "cococtel",
-		AllowNativePasswords: true,
-	}
-	db, err := createDB(cfg)
+
+	godotenv.Load(".env")
+	db, err := createDB()
 	if err != nil {
 		panic(err)
 	}
-
 	eng := gin.Default()
 	router := http.InitRouter(eng, db)
 	router.MapRoutes()
@@ -35,12 +24,12 @@ func main() {
 		panic(err)
 	}
 }
-func createDB(cfg mysql.Config) (*sql.DB, error) {
-	//dbUser := "root"
-	//dbPassword := ""
-	//dbHost := "localhost:3306"
-	//dbName := "cococtel"
-	//var connectionString = fmt.Sprintf("%s:@tcp(%s)/%s?charset=utf8", dbUser, dbHost, dbName)
+func createDB() (*sql.DB, error) {
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	dbName := os.Getenv("DB_NAME")
+	var connectionString = fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&tls=true", dbUser, dbPassword, dbHost, dbName)
 
-	return sql.Open("mysql", cfg.FormatDSN())
+	return sql.Open("mysql", connectionString)
 }

@@ -13,7 +13,7 @@ type response struct {
 type errorResponse struct {
 	Status  int    `json:"-"`
 	Code    string `json:"code"`
-	Message string `json:"string"`
+	Message string `json:"message"`
 }
 
 func Response(c *gin.Context, status int, data interface{}) {
