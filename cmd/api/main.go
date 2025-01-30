@@ -16,6 +16,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
 	eng := gin.Default()
 	router := http.InitRouter(eng, db)
 	router.MapRoutes()
