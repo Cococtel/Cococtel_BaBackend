@@ -27,7 +27,7 @@ func (r *router) MapRoutes() {
 }
 
 func (r *router) setGroup() {
-	r.eng.Use(middleware.CORS(), middleware.ProtectedHandler())
+	r.eng.Use(middleware.CORS()) //middleware.ProtectedHandler()
 }
 
 func (r *router) buildRoutes() {
