@@ -6,7 +6,6 @@ type (
 		Name     string `json:"name"`
 		Lastname string `json:"lastname"`
 		Email    string `json:"email"`
-		Country  string `json:"country"`
 		Phone    string `json:"phone"`
 		Image    string `json:"image"`
 	}
