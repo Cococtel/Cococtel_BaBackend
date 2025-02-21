@@ -38,7 +38,6 @@ func getUserFromRegister(register dtos.Register) (entities.Login, entities.User,
 		Lastname: *register.Lastname,
 		Email:    *register.Email,
 		Phone:    *register.Phone,
-		Image:    *register.Image,
 	}
 
 	login := entities.Login{
