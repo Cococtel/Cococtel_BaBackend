@@ -8,7 +8,6 @@ type (
 		Lastname *string `json:"lastname,omitempty"`
 		Phone    *string `json:"phone,omitempty"`
 		Email    *string `json:"email,omitempty"`
-		Country  *string `json:"country,omitempty"`
 		Image    *string `json:"image,omitempty"`
 		Username *string `json:"username,omitempty"`
 		Password *string `json:"password,omitempty"`

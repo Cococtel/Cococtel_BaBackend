@@ -61,17 +61,18 @@ func (us *user) RegisterUser(ctx *gin.Context, register dtos.Register) (entities
 		return entities.User{}, utils.NewApiError(defines.ErrAlreadyExists, http.StatusConflict)
 	}
 
+	err = us.userRepository.SaveUser(ctx, usr)
+	if err != nil {
+		log.Println(err)
+		return entities.User{}, utils.NewApiError(err, http.StatusInternalServerError)
+	}
+
 	err = us.userRepository.SaveLogin(ctx, login)
 	if err != nil {
 		log.Println(err)
 		return entities.User{}, utils.NewApiError(err, http.StatusInternalServerError)
 	}
 
-	err = us.userRepository.SaveUser(ctx, usr)
-	if err != nil {
-		log.Println(err)
-		return entities.User{}, utils.NewApiError(err, http.StatusInternalServerError)
-	}
 	/* TODO: Conectar microservicio de envio de correo, notificaciones, etc.
 	err = utils.SendEmail(usr.Email, defines.SuccessfulRegisterTitle, defines.SuccessfulRegisterDescription, defines.LinkToVitalit, defines.SuccessfulRegisterSubject)
 	if err != nil {
@@ -142,14 +143,16 @@ func (us *user) ValidateLogin(ctx *gin.Context, twoFactorAuth dtos.TwoFactorAuth
 		log.Println(err)
 		return entities.SuccessfulLogin{}, utils.NewApiError(err, http.StatusInternalServerError)
 	}
-	parsedDate, err := time.Parse(usr.Expiration, time.Layout)
-	if parsedDate.Before(time.Now()) {
-		accountType := entities.AccountType{
-			UserID:     usr.UserID,
-			Expiration: "",
-			NewType:    defines.FreeType,
+	if usr.Expiration != "0" {
+		parsedDate, _ := time.Parse(usr.Expiration, time.Layout)
+		if parsedDate.Before(time.Now()) {
+			accountType := entities.AccountType{
+				UserID:     usr.UserID,
+				Expiration: "",
+				NewType:    defines.FreeType,
+			}
+			_ = us.userRepository.UpdateAccountType(ctx, accountType)
 		}
-		_ = us.userRepository.UpdateAccountType(ctx, accountType)
 	}
 	return usr, nil
 }

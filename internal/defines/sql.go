@@ -3,8 +3,8 @@ package defines
 const (
 	// Registro
 	SaveUser = `INSERT INTO users (
-                  	id_user, name_user, lastname_user, email_user, country_user, phone_user, image_user)
-                  	VALUES (?, ?, ?, ?, ?, ?, ?);`
+                  	id_user, name_user, lastname_user, email_user, phone_user, image_user)
+                  	VALUES (?, ?, ?, ?, ?, ?);`
 	SaveLogin      = `INSERT INTO login (id_login, username_login, password_login, secret_login, type_login, id_user) VALUES (?, ?, ?, ?, ?, ?);`
 	CheckDuplicity = `SELECT CASE WHEN EXISTS (
             SELECT 1 
@@ -45,10 +45,10 @@ const (
 	UpdateUserType = `UPDATE login 
 					SET account_login  = ?, expiration_login = ?
 					WHERE id_user = ?;`
-	GetUser = `SELECT name_user, lastname_user, email_user, phone_user, email_user, country_user, image_user 
+	GetUser = `SELECT name_user, lastname_user, email_user, phone_user, email_user, image_user 
 				FROM users 
 				WHERE id_user = ?`
 	UpdateUser = `UPDATE users 
-					SET name_user = ?, lastname_user = ?, phone_user = ?, email_user = ?, country_user = ?, image_user = ? 
+					SET name_user = ?, lastname_user = ?, phone_user = ?, email_user = ?, image_user = ? 
 					WHERE id_user = ?;`
 )

@@ -17,6 +17,7 @@ type Router interface {
 
 type router struct {
 	eng *gin.Engine
+	rg  *gin.RouterGroup
 	db  *sql.DB
 }
 
@@ -27,7 +28,8 @@ func (r *router) MapRoutes() {
 }
 
 func (r *router) setGroup() {
-	r.eng.Use(middleware.CORS()) //middleware.ProtectedHandler()
+	r.eng.Use(middleware.CORS())
+	r.rg = r.eng.Group("/v1", middleware.ProtectedHandler())
 }
 
 func (r *router) buildRoutes() {
@@ -37,12 +39,12 @@ func (r *router) buildRoutes() {
 
 	userController := usercontroller.NewUser(userService)
 
-	r.eng.POST(defines.VerifyPath, userController.VerifyUser())
+	r.rg.POST(defines.VerifyPath, userController.VerifyUser())
 	r.eng.POST(defines.RegisterPath, userController.RegisterUser())
 	r.eng.POST(defines.LoginPath, userController.LoginUser())
 	r.eng.POST(defines.ValidateLoginPath, userController.ValidateLogin())
-	r.eng.POST(defines.GetQRDoubleAuthPath, userController.GetQRDoubleAuth())
-	r.eng.POST(defines.NotifyQRReadPath, userController.NotifyQRRead())
+	r.rg.POST(defines.GetQRDoubleAuthPath, userController.GetQRDoubleAuth())
+	r.rg.POST(defines.NotifyQRReadPath, userController.NotifyQRRead())
 }
 func (r *router) addSystemPaths() {
 	r.eng.GET(defines.PingPath, controllers.Ping())
