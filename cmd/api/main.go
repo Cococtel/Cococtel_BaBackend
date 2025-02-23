@@ -47,7 +47,6 @@ func createDB() (*sql.DB, error) {
 		d, err := cloudsqlconn.NewDialer(context.Background())
 		if err != nil {
 			log.Println(err)
-			log.Println(err)
 			return nil, fmt.Errorf("cloudsqlconn.NewDialer: %w", err)
 		}
 		var opts []cloudsqlconn.DialOption

@@ -113,3 +113,12 @@ func verifyOTP(secret string, code string) bool {
 		return false
 	}
 }
+
+func updateUser(userToUpdate entities.User, update dtos.Profile) (bool, entities.User) {
+	userToUpdate.Name = *update.Name
+	userToUpdate.Lastname = *update.Lastname
+	sameEmail := userToUpdate.Email == *update.Email
+	userToUpdate.Email = *update.Email
+	userToUpdate.Phone = *update.Phone
+	return sameEmail, userToUpdate
+}

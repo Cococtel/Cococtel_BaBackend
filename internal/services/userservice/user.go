@@ -1,6 +1,8 @@
 package userservice
 
 import (
+	"database/sql"
+	"errors"
 	"github.com/Cococtel/Cococtel_BaBackend/internal/defines"
 	"github.com/Cococtel/Cococtel_BaBackend/internal/domain/dtos"
 	"github.com/Cococtel/Cococtel_BaBackend/internal/domain/entities"
@@ -20,8 +22,8 @@ type (
 		ValidateLogin(*gin.Context, dtos.TwoFactorAuth) (entities.SuccessfulLogin, utils.ApiError)
 		GetQRDoubleAuth(*gin.Context, dtos.GenerateQR) (string, utils.ApiError)
 		NotifyQRRead(*gin.Context, string) utils.ApiError
-		//UpdateProfile(*gin.Context, dtos.Profile) utils.ApiError
-		//GetUser(*gin.Context, string) (entities.User, utils.ApiError)
+		UpdateProfile(*gin.Context, dtos.Profile) utils.ApiError
+		GetUser(*gin.Context, string) (entities.User, utils.ApiError)
 		//UpdatePassword(*gin.Context, string) utils.ApiError
 		//SendEmailRecoveryPassword(*gin.Context, string) utils.ApiError
 		//UpdateUserType(*gin.Context, string, dtos.AccountType) utils.ApiError
@@ -184,7 +186,6 @@ func (us *user) NotifyQRRead(ctx *gin.Context, userID string) utils.ApiError {
 	return nil
 }
 
-/*
 func (us *user) UpdateProfile(ctx *gin.Context, update dtos.Profile) utils.ApiError {
 	userID, err := utils.GetUserIDFromToken(ctx)
 	if err != nil {
@@ -196,11 +197,6 @@ func (us *user) UpdateProfile(ctx *gin.Context, update dtos.Profile) utils.ApiEr
 		log.Println(err)
 		return utils.NewApiError(err, http.StatusNotFound)
 	}
-	loginToUpdate, err := us.userRepository.GetLoginByEmail(ctx, userToUpdate.Email)
-	if err != nil {
-		log.Println(err)
-		return utils.NewApiError(err, http.StatusInternalServerError)
-	}
 	sameEmail, finalUser := updateUser(userToUpdate, update)
 	if !sameEmail {
 		_, err = us.userRepository.GetLoginByEmail(ctx, finalUser.Email)
@@ -208,20 +204,7 @@ func (us *user) UpdateProfile(ctx *gin.Context, update dtos.Profile) utils.ApiEr
 			return utils.NewApiError(defines.ErrAlreadyExistsEmail, http.StatusBadRequest)
 		}
 	}
-	if loginToUpdate.Username != update.Username {
-		_, err = us.userRepository.GetLoginByUsername(ctx, update.Username)
-		if !errors.Is(err, sql.ErrNoRows) {
-			return utils.NewApiError(defines.ErrAlreadyExistsUsername, http.StatusBadRequest)
-		}
-		loginToUpdate.Username = update.Username
-	}
 	err = us.userRepository.UpdateUser(ctx, finalUser)
-	if err != nil {
-		log.Println(err)
-		return utils.NewApiError(err, http.StatusInternalServerError)
-	}
-	loginToUpdate.FtLogin = update.FtLogin == 1
-	err = us.userRepository.UpdateLogin(ctx, loginToUpdate)
 	if err != nil {
 		log.Println(err)
 		return utils.NewApiError(err, http.StatusInternalServerError)
@@ -246,6 +229,7 @@ func (us *user) GetUser(ctx *gin.Context, userID string) (entities.User, utils.A
 	return usr, nil
 }
 
+/*
 func (us *user) UpdatePassword(ctx *gin.Context, password string) utils.ApiError {
 	userID, err := utils.GetUserIDFromToken(ctx)
 	if err != nil {

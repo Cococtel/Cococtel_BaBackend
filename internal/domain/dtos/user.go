@@ -21,6 +21,13 @@ type (
 		//AdditionalData     *string `json:"user,omitempty"`
 	}
 
+	Profile struct {
+		Name     *string `json:"name"`
+		Lastname *string `json:"lastname,omitempty"`
+		Phone    *string `json:"phone,omitempty"`
+		Email    *string `json:"email,omitempty"`
+	}
+
 	TwoFactorAuth struct {
 		User string `json:"user"`
 		Code string `json:"code"`

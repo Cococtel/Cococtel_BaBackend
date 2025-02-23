@@ -130,7 +130,6 @@ func (u *user) NotifyQRRead() gin.HandlerFunc {
 	}
 }
 
-/*
 func (u *user) EditProfile() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var profile dtos.Profile
@@ -144,7 +143,7 @@ func (u *user) EditProfile() gin.HandlerFunc {
 			utils.Error(ctx, err.Status(), err.Message().Error())
 			return
 		}
-		utils.Success(ctx, http.StatusOK, defines.Ok)
+		utils.Success(ctx, http.StatusOK, "ok")
 	}
 }
 
@@ -161,6 +160,7 @@ func (u *user) GetUser() gin.HandlerFunc {
 	}
 }
 
+/*
 func (u *user) UpdatePassword() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var recoveryPassword dtos.RecoveryPassword

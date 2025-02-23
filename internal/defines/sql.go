@@ -45,10 +45,10 @@ const (
 	UpdateUserType = `UPDATE login 
 					SET account_login  = ?, expiration_login = ?
 					WHERE id_user = ?;`
-	GetUser = `SELECT name_user, lastname_user, email_user, phone_user, email_user, image_user 
+	GetUser = `SELECT name_user, lastname_user, email_user, phone_user
 				FROM users 
 				WHERE id_user = ?`
 	UpdateUser = `UPDATE users 
-					SET name_user = ?, lastname_user = ?, phone_user = ?, email_user = ?, image_user = ? 
+					SET name_user = ?, lastname_user = ?, phone_user = ?, image_user = ? 
 					WHERE id_user = ?;`
 )

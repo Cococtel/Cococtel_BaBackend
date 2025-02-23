@@ -165,7 +165,7 @@ func (ur *userRepository) UpdateAccountType(ctx *gin.Context, accountType entiti
 func (ur *userRepository) GetUser(ctx *gin.Context, userID string) (entities.User, error) {
 	row := ur.db.QueryRow(defines.GetUser, userID)
 	user := entities.User{UserID: userID}
-	err := row.Scan(&user.Name, &user.Lastname, &user.Email, &user.Phone, &user.Email, &user.Image)
+	err := row.Scan(&user.Name, &user.Lastname, &user.Email, &user.Phone)
 	if err != nil {
 		log.Println(err)
 		return entities.User{}, err
@@ -179,7 +179,7 @@ func (ur *userRepository) UpdateUser(ctx *gin.Context, user entities.User) error
 		log.Println(err)
 		return err
 	}
-	_, err = stmt.Exec(&user.Name, &user.Lastname, &user.Phone, &user.Email, &user.Image, &user.UserID)
+	_, err = stmt.Exec(&user.Name, &user.Lastname, &user.Phone, &user.Email, &user.UserID)
 	if err != nil {
 		log.Println(err)
 		return err
