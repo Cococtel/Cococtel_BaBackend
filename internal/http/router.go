@@ -45,6 +45,8 @@ func (r *router) buildRoutes() {
 	r.eng.POST(defines.ValidateLoginPath, userController.ValidateLogin())
 	r.rg.POST(defines.GetQRDoubleAuthPath, userController.GetQRDoubleAuth())
 	r.rg.POST(defines.NotifyQRReadPath, userController.NotifyQRRead())
+	r.rg.GET(defines.ProfilePath+defines.IDPath, userController.GetUser())
+	r.rg.PUT(defines.ProfilePath, userController.EditProfile())
 }
 func (r *router) addSystemPaths() {
 	r.eng.GET(defines.PingPath, controllers.Ping())

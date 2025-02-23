@@ -19,8 +19,8 @@ type (
 		ValidateLogin() gin.HandlerFunc
 		GetQRDoubleAuth() gin.HandlerFunc
 		NotifyQRRead() gin.HandlerFunc
-		//EditProfile() gin.HandlerFunc
-		//GetUser() gin.HandlerFunc
+		EditProfile() gin.HandlerFunc
+		GetUser() gin.HandlerFunc
 		//UpdatePassword() gin.HandlerFunc
 		//SendEmailToRecoveryPassword() gin.HandlerFunc
 		//UpdateUserType() gin.HandlerFunc

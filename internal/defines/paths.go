@@ -12,5 +12,6 @@ const (
 	GetQRDoubleAuthPath = "/qr"
 	NotifyQRReadPath    = "/notify" + IDPath
 	VerifyPath          = "/verify"
+	ProfilePath         = "/profile"
 	//Token               = "/token"
 )
